@@ -10,3 +10,5 @@ gpg --list-keys
 gpg --import MICOMPA_llave_publica.asc
 #listamos mis llaves para confirmar la importacion de la llave de micompa
 gpg --list-keys
+#con el siguiente comando escribimos el mesnaje que le vamos a escribir a micompa
+echo "this message is secret, arsenal trash" > doc_no_cifrado.txt
