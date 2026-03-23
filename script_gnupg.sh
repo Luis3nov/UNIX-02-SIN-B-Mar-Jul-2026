@@ -6,3 +6,5 @@ gpg --armor --export-secret-keys B84A19B106C03AD7
 gpg --armor --export luis3novillo@gmail.com > mi_llave_publica.asc
 #listo mis llaves nuevamente
 gpg --list-keys
+#importamos la llave publica de micompa
+gpg --import MICOMPA_llave_publica.asc
