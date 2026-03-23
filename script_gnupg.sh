@@ -4,3 +4,5 @@ gpg --list-secret-keys --keyid-format=long
 gpg --armor --export-secret-keys B84A19B106C03AD7
 #exporto mi llave publica
 gpg --armor --export luis3novillo@gmail.com > mi_llave_publica.asc
+#listo mis llaves nuevamente
+gpg --list-keys
