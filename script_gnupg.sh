@@ -16,3 +16,7 @@ echo "this message is secret, arsenal trash" > doc_no_cifrado.txt
 gpg --output doc_cifrado.txt --encrypt --recipient 31FFC79B29A787E86EE1ADAF2BD74A3FCDD98B69 doc_no_cifrado.txt
 #y con el siguiente comando desenciptamos el mensaje de micompa
 gpg --decrypt micompita_doc_cifrado.txt
+#con el siguiente comando creamos un documento con mi mensaje no cifrado firmado
+gpg --output doc_no_cifrado_firmado.txt --clearsign doc_no_cifrado.txt
+#y con cat imprimimos en la terminal para verificar si se creo el documento
+cat doc_no_cifrado_firmado.txt
