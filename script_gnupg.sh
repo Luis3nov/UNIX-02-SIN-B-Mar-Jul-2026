@@ -28,6 +28,14 @@ gpg --edit-key 31FFC79B29A787E86EE1ADAF2BD74A3FCDD98B69
 trust
 #and the level of confidence
 4
-
-
-
+#then we have to sign de key for our decision, and confirm and put our password
+gpg --sign-key 31FFC79B29A787E86EE1ADAF2BD74A3FCDD98B69
+#then we have to verify our sign
+gpg --verify ALEX_doc_no_cifrado_firmado.txt
+#then we are going to sign the document in binary format
+gpg --output doc_no_cifrado_firmado_binario.txt --sign doc_no_cifrado.txt
+#then we have to verify if the doc with the sign binary is correct
+gpg --verify ALEX_doc_no_cifrado_firmado_binario.txt
+#now we're going to sign the document and separate the signature from the document.
+gpg --output firma_separada_doc_no_cifrado.sig --detach-sign
+doc_no_cifrado.txt
