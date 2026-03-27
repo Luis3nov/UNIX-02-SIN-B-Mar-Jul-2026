@@ -39,3 +39,6 @@ gpg --verify ALEX_doc_no_cifrado_firmado_binario.txt
 #now we're going to sign the document and separate the signature from the document.
 gpg --output firma_separada_doc_no_cifrado.sig --detach-sign
 doc_no_cifrado.txt
+#then we are going to valid the doc and the sign of our compita
+gpg --verify ALEX_firma_separada_doc_no_cifrado.sig ALEX_doc_no_cifrado.txt
+
