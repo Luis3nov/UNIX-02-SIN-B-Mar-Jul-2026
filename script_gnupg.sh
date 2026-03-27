@@ -41,4 +41,9 @@ gpg --output firma_separada_doc_no_cifrado.sig --detach-sign
 doc_no_cifrado.txt
 #then we are going to valid the doc and the sign of our compita
 gpg --verify ALEX_firma_separada_doc_no_cifrado.sig ALEX_doc_no_cifrado.txt
-
+#finally we have to create a doc signed and binary
+gpg --output doc_cifrado_y_firmado.txt --encrypt --sign --recipient C3BD77E8631B863F50539A5913F0A2DFFDB3B485 doc_no_cifrado.txt
+#then we have to change the document name in order to later validate the signature and decrypt it
+gpg --output doc_cifrado_y_firmado_descifrado_y_validado.txt --decrypt ALEX_doc_cifrado_y_firmado.txt
+#anddd finaly we have to check the message with cat, we could see the private message from our compita
+cat doc_cifrado_y_firmado_descifrado_y_validado.txt
