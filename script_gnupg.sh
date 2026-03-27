@@ -20,3 +20,14 @@ gpg --decrypt micompita_doc_cifrado.txt
 gpg --output doc_no_cifrado_firmado.txt --clearsign doc_no_cifrado.txt
 #y con cat imprimimos en la terminal para verificar si se creo el documento
 cat doc_no_cifrado_firmado.txt
+#then we have to verify the signed document from our compita
+gpg --verify ALEX_doc_no_cifrado_firmado.txt
+#then we have to edit, and do a vote of confidence
+gpg --edit-key 31FFC79B29A787E86EE1ADAF2BD74A3FCDD98B69
+#we have to put trust
+trust
+#and the level of confidence
+4
+
+
+
