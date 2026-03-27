@@ -1,24 +1,24 @@
-#listo mi llave privada
+#first I list my private key
 gpg --list-secret-keys --keyid-format=long
-#exportamos mi llave privada y con armor la transforamrmos de binario a texto
+#we have to export my private key with my hash and with armor we transform it from binary to text
 gpg --armor --export-secret-keys B84A19B106C03AD7
-#exporto mi llave publica
+#then we have to export our publi key
 gpg --armor --export luis3novillo@gmail.com > mi_llave_publica.asc
-#listo mis llaves nuevamente
+#then list de keys again
 gpg --list-keys
-#importamos la llave publica de micompa
+#then we have to import de public key form our COMPA
 gpg --import MICOMPA_llave_publica.asc
-#listamos mis llaves para confirmar la importacion de la llave de micompa
+#next we need to list the keys to confirm the import of the key from my computer.
 gpg --list-keys
-#con el siguiente comando escribimos el mesnaje que le vamos a escribir a micompa
+#with this command we have to write the private message for our COMPITA
 echo "this message is secret, arsenal trash" > doc_no_cifrado.txt
-#usamos el hash de la llave de mi compa para cifrar el mensaje
+#we used our friend key hash to encrypt the message
 gpg --output doc_cifrado.txt --encrypt --recipient 31FFC79B29A787E86EE1ADAF2BD74A3FCDD98B69 doc_no_cifrado.txt
-#y con el siguiente comando desenciptamos el mensaje de micompa
+#and with the following command we decrypt the message from mycompa
 gpg --decrypt micompita_doc_cifrado.txt
-#con el siguiente comando creamos un documento con mi mensaje no cifrado firmado
+#with the following command we create a document with my signed unencrypted message
 gpg --output doc_no_cifrado_firmado.txt --clearsign doc_no_cifrado.txt
-#y con cat imprimimos en la terminal para verificar si se creo el documento
+#and with cat we print to the terminal to verify if the document was created
 cat doc_no_cifrado_firmado.txt
 #then we have to verify the signed document from our compita
 gpg --verify ALEX_doc_no_cifrado_firmado.txt
