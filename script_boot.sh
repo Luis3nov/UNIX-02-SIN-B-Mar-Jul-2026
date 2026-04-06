@@ -19,3 +19,11 @@ man mkdir #it shows me the manual
 pwd #print working directory
 whoami  #it shows me my username
 
+ls #it shows file and folder names without details
+ls -l #it show all (detailed information)
+ls -la #it shows me all and the hidden files
+ls -lh #it shows in format human-readable
+ls -lt #it order most recently modified files
+ls / #it shows me de FHS, filesystem hierarchy standard
+ls /etc | head -20 #etc is for configuration files, and head -20 is for only show the first 20 text lines of the command, and tail is for the last 20 text lines
+ls /dev | head -20 #and dev is for the device folder
