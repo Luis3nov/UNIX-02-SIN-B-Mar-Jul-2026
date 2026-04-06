@@ -9,3 +9,5 @@ ls -lai
 total 12 #this indicates the total size used by the listed files in blocks
 925620 drwxr-xr-x 2 codespace codespace 4096 Apr  6 12:39 . #it means that this directory has 2 hard links
 918515 drwxr-x--- 1 codespace codespace 4096 Apr  6 12:39 .. #and this has only one hard link
+
+stat . #it gives me some detailed information about my direcotry, for example it gives me device: 0,45. it means that there is a virtual disk
