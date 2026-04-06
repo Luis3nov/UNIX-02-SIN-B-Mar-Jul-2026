@@ -11,3 +11,11 @@ total 12 #this indicates the total size used by the listed files in blocks
 918515 drwxr-x--- 1 codespace codespace 4096 Apr  6 12:39 .. #and this has only one hard link
 
 stat . #it gives me some detailed information about my direcotry, for example it gives me device: 0,45. it means that there is a virtual disk
+
+mkdir -p /tmp/prueba/sub1 /tmp/prueba/sub2 #here we create two new directories, tmp is for temporal files and -p means that it also create the parent directory
+stat /tmp/prueba #it show me detailed information from the directory prueba
+man mkdir #it shows me the manual 
+
+pwd #print working directory
+whoami  #it shows me my username
+
