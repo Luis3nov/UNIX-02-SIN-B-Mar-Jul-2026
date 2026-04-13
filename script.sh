@@ -4,3 +4,6 @@ ls -l #Shows detailed information about each file.
 ls -a #Lists all files, including hidden ones.
 ls -h #Lists all files, including hidden ones.
 ls -lah
+
+mkdir -- -rf #here we create a file, we have to use -- to indicate that is name
+rmdir -r -- -rf #then we delete the file, rmdir only delete empty files
