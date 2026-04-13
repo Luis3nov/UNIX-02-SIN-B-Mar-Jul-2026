@@ -10,3 +10,5 @@ rmdir -r -- -rf #then we delete the file, rmdir only delete empty files
 
 ls -help #and this gives me explanations
 man ls #this is the complete manual
+
+--depth #Create a shallow clone with a history truncated to the specified number of commits. Implies --single-branch unless --no-single-branch is given to fetch the histories near the tips of all branches. If you want to clone submodules shallowly, also pass --shallow-submodules.
