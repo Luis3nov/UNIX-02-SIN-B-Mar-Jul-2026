@@ -42,3 +42,6 @@ ls -l hola.sh #we use this again to check the permissions
 
 ls /etc #here we list the contents of the /etc directory.
 sudo touch /etc/prueba.txt #here an empty file called test.txt is created inside /etc, but we need to add sudo
+mkdir ~/mi_carpeta #create a file mi_carpeta into home so we dont need sudo
+sudo apt update #here we update the package list, we need sudo to have all the permissions
+sudo apt install cowsay #here we install a program we need sudo also 
