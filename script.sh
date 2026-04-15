@@ -31,3 +31,6 @@ echo "$HOME" #uses double quotes, inside double quotes, the shell expands variab
 echo '$HOME' #uses single quotes, inside single quotes, the shell treats everything as literal text so $HOME is not expanded
 
 echo '#!bin/sh' > hola.sh #here we create a file hola.sh and we write '#!bin/sh into that file
+echo 'echo "Hola desde mi primer script"' >> hola.sh #here we add "Hola desde mi primer script" to the end of the file
+cat hola.sh #here we print the content of the file in the terminal
+./hola.sh #this open the hola.sh as a shell but we dont have permissions
