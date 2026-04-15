@@ -29,3 +29,5 @@ sudo su #this enter as root with a clean root environment and with all sudo priv
 
 echo "$HOME" #uses double quotes, inside double quotes, the shell expands variables so $HOME is replaced by the value of your home directory
 echo '$HOME' #uses single quotes, inside single quotes, the shell treats everything as literal text so $HOME is not expanded
+
+echo '#!bin/sh' > hola.sh #here we create a file hola.sh and we write '#!bin/sh into that file
