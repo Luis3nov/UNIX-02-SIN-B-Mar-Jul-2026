@@ -41,3 +41,4 @@ ls -l hola.sh #we use this again to check the permissions
 ./hola.sh #and now this commands works
 
 ls /etc #here we list the contents of the /etc directory.
+sudo touch /etc/prueba.txt #here an empty file called test.txt is created inside /etc, but we need to add sudo
