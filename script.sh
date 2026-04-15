@@ -16,4 +16,11 @@ man ls #this is the complete manual
 chmod +x script.sh #It adds execution permission to script.sh.
 chmod u+x script.sh #It adds execution permission only to the file owner.
 chmod o-r secreto.txt #It removes read permission from other users.
-chmod u+rw,go-rwx privado #Only the owner will be able to read and write. No one else will have access.
+chmod u+rw,go-rwx script.sh #Only the owner will be able to read and write. No one else will have access.
+
+sudo echo "hola" > /etc/archivo_protegido #`it execute hola and write it in a file. but 'sudo` applies to `echo`, but the redirection `>` is handled by the shell. that's why you get the "permission denied" error.
+sudo echo "hola" | sudo tee /etc/archivo_protegido #it create or overwrite the file with hola.
+sudo echo "hola" | sudo tee /etc/archivo_protegido > /dev/null #it made the same of the previous but send the output to nothing
+sudo cat /etc/archivo_protegido #this print the file in the terminal
+
+sudo sh -c 'echo "chao" >> /etc/archivo_protegido' #and here we add chao at the end of the file
