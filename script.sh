@@ -34,3 +34,5 @@ echo '#!bin/sh' > hola.sh #here we create a file hola.sh and we write '#!bin/sh 
 echo 'echo "Hola desde mi primer script"' >> hola.sh #here we add "Hola desde mi primer script" to the end of the file
 cat hola.sh #here we print the content of the file in the terminal
 ./hola.sh #this open the hola.sh as a shell but we dont have permissions
+
+ls -l hola.sh # this shows detailed information about the file hola.sh
