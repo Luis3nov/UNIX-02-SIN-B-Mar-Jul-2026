@@ -1,4 +1,2 @@
-#!bin/sh
-echo "Hola desde mi primer script"
- "Hola desde mi primer script"
+#!/bin/sh
 echo "Hola desde mi primer script"
