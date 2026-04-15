@@ -45,3 +45,9 @@ sudo touch /etc/prueba.txt #here an empty file called test.txt is created inside
 mkdir ~/mi_carpeta #create a file mi_carpeta into home so we dont need sudo
 sudo apt update #here we update the package list, we need sudo to have all the permissions
 sudo apt install cowsay #here we install a program we need sudo also 
+
+touch prueba.txt #here we create a empty file called prueba.txt
+chmod 600 prueba.txt #here we change the permissions, the user that create the file can read and write, the other and the group dont have any permission
+ls -l prueba.txt #here we check the permissions
+chmod 755 prueba.txt #here we again change the permissions, we add to the user all the permissions and the group and other can read and execute
+ls -l prueba.txt #and again we check the permissions
