@@ -24,3 +24,5 @@ sudo echo "hola" | sudo tee /etc/archivo_protegido > /dev/null #it made the same
 sudo cat /etc/archivo_protegido #this print the file in the terminal
 
 sudo sh -c 'echo "chao" >> /etc/archivo_protegido' #and here we add chao at the end of the file
+
+sudo su #this enter as root with a clean root environment and with all sudo privileges
