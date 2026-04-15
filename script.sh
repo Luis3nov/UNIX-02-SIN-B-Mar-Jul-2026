@@ -39,3 +39,5 @@ ls -l hola.sh # this shows detailed information about the file hola.sh
 chmod +x hola.sh #this adds execute permission to the file
 ls -l hola.sh #we use this again to check the permissions
 ./hola.sh #and now this commands works
+
+ls /etc #here we list the contents of the /etc directory.
