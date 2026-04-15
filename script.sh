@@ -26,3 +26,6 @@ sudo cat /etc/archivo_protegido #this print the file in the terminal
 sudo sh -c 'echo "chao" >> /etc/archivo_protegido' #and here we add chao at the end of the file
 
 sudo su #this enter as root with a clean root environment and with all sudo privileges
+
+echo "$HOME" #uses double quotes, inside double quotes, the shell expands variables so $HOME is replaced by the value of your home directory
+echo '$HOME' #uses single quotes, inside single quotes, the shell treats everything as literal text so $HOME is not expanded
