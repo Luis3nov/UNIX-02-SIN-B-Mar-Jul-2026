@@ -51,3 +51,13 @@ chmod 600 prueba.txt #here we change the permissions, the user that create the f
 ls -l prueba.txt #here we check the permissions
 chmod 755 prueba.txt #here we again change the permissions, we add to the user all the permissions and the group and other can read and execute
 ls -l prueba.txt #and again we check the permissions
+
+umask #umask controls default file directory permissions by removing specific permissions automatically when they are created
+touch archivo 1 #it create an empty file. if it already exists, simply update its timestamp. and default permissions: depend on the current umask.
+mkdir directorio1 #it create a directory also with the permissions with de actual umask.
+ls -l #it list all de files and directories
+umask 027 #it modify the default permissions.
+touch archivo2 #it again create an empty file with default permissions asignedd by umask
+mkdir directorio2 #then we create a new directory
+ls -l #it list all de files and directories
+umask 077 #then we modified the default permissions again
