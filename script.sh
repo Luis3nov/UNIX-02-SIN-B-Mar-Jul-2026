@@ -66,3 +66,9 @@ mkdir privado #and we create a new diretory, we can see that the permissions wer
 
 sudo chown -R $(whoami) . #it change the owner of all files and folders in the current directory to your user.
 sudo setfacl -bnR . #it removes all custom ACL permissions from all files and folders.
+echo "Hola" > mi_archivo
+ls -l mi_archivo
+
+sudo useradd -m -s /usr/bin/zsh luna #here we create a user called luna, with a home directory and the shell configured as zsh
+sudo chown luna mi_archivo #(change owner) we change the owner of mi_archivo file
+ls -l mi_archivo #here we list the permissions of mi_archivo
