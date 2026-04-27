@@ -61,3 +61,8 @@ touch archivo2 #it again create an empty file with default permissions asignedd 
 mkdir directorio2 #then we create a new directory
 ls -l #it list all de files and directories and permissions
 umask 077 #then we modified the default permissions again
+touch secreto.txt #then we create a new empty file
+mkdir privado #and we create a new diretory, we can see that the permissions were modified
+
+sudo chown -R $(whoami) . #it change the owner of all files and folders in the current directory to your user.
+sudo setfacl -bnR . #it removes all custom ACL permissions from all files and folders.
