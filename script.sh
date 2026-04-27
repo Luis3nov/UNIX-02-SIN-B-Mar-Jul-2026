@@ -72,3 +72,9 @@ ls -l mi_archivo
 sudo useradd -m -s /usr/bin/zsh luna #here we create a user called luna, with a home directory and the shell configured as zsh
 sudo chown luna mi_archivo #(change owner) we change the owner of mi_archivo file
 ls -l mi_archivo #here we list the permissions of mi_archivo
+
+sudo groupadd grupo_test #here we create a new group called group_test in the system
+groups #then we show the groups that we have in our codespaces, but the group that we created not show
+sudo usermod -aG grupo_test $(whoami) #here we add our user to the group
+newgrp grupo_test #then we reload the session
+groups #and now we can see that groups is showed
