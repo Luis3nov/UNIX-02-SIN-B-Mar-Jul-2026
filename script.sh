@@ -78,3 +78,9 @@ groups #then we show the groups that we have in our codespaces, but the group th
 sudo usermod -aG grupo_test $(whoami) #here we add our user to the group
 newgrp grupo_test #then we reload the session
 groups #and now we can see that groups is showed
+chgrp grupo_test comun #it changes the group ownership of comun to group_test
+
+mkdir -p proyecto/sub #it creates the directory project/sub, including parent folders if they don’t exist
+touch proyecto/readme proyecto/sub/datos #it creates two empty files: readme and sub/data inside project
+sudo chown -R luna:grupo_test proyecto #changes owner to luna and group to grupo_test for everything inside proyecto recursively
+ls -IR proyecto #lists all files and subdirectories inside project recursively showing their inode numbers
