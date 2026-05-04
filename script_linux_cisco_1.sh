@@ -21,3 +21,16 @@ ls -lSr /var/log # The smallest files are shown first
 su - # Switch to another user account using a login shell
 exit # Exit the current shell session
 sl # Run the sl command, in this case it needs sudo
+
+ls -l hello.sh # Display detailed information about hello.sh
+./hello.sh # Try to execute the hello.sh script from the current directory
+# This fails if the file does not have execute permission
+chmod u+x hello.sh # Add execute permission for the file owner
+sudo chown root hello.sh # Change the owner of hello.sh to root
+cat animals.txt # Display the full contents of animals.txt
+cat alpha.txt # Display the full contents of alpha.txt
+head alpha.txt # Display the first 10 lines of alpha.txt
+tail alpha.txt # Display the last 10 lines of alpha.txt
+head -n 5 alpha.txt # Display the first 5 lines of alpha.txt
+dd if=/dev/zero of=/tmp/swapex bs=1M count=50 # Create a 50 MB file filled with zero bytes
+dd if=/dev/sda of=/dev/sdb # Copy one entire disk to another at the block level
