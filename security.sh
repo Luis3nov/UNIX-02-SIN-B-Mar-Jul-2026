@@ -11,5 +11,6 @@ id -G #show all group IDs for current user
 cat /etc/group | grep games #displays the group entry for “games” from the system groups file
 cat /etc/gshadow #displays the secure group file, including group passwords and admin members
 
-mkdir ~/proyecto_unix
-ls -la ~/proyecto_unix/
+mkdir ~/proyecto_unix #it creates a new directory: proyecto_unix
+ls -la ~/proyecto_unix/ #it list all files with detailed information included hidden files
+
