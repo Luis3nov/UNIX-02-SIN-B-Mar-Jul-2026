@@ -23,3 +23,14 @@ grep "desarrolladores\|operaciones\|servicios_web" /etc/group #searches the /etc
 grep -E "desarrolladores|operaciones|servicios_web" /etc/group #it do the same as the previous
 #grep search text into files
 groupadd --help #here we view de principal options
+
+grep "GID_MIN\|GID_MAX\|SYS_GID" /etc/login.defs #searches the login configuration file for the minimum, maximum, and system GID settings
+
+#now we create groups with addgroup
+addgroup diseno
+addgroup -gid 2100 marketing
+ddgroup --system cache_web
+
+#now we add users to the groups with usermod (low-level)
+usermod -aG desarrolladores $(whoami)
+usermod -aG diseno root
