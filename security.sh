@@ -39,3 +39,11 @@ adduser $(whoami) marketing #here we adding user root to the group marketing
 #view current status
 id root
 grep root /etc/group
+
+
+#now we create a temporal group and we add user root
+groupadd grupo_temporal
+adduser root grupo_temporal
+id root
+
+sudo usermod -G desarrolladores root #that delete all groups except desarrolladores
