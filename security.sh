@@ -50,3 +50,24 @@ sudo usermod -G desarrolladores root #that delete all groups except desarrollado
 
 sudo usermod -aG diseno,marketing,grupo_temporal $(whoami) #that resets the groups for the user
 groups root
+
+#prepare scenary for the practice
+mkdir -p ~/lab_chgrp/{proyectos,reportes,scripts} 
+touch ~/lab_chgrp/proyectos/app.py
+touch ~/lab_chgrp/proyectos/config.json
+touch ~/lab_chgrp/reportes/informe.txt
+touch ~/lab_chgrp/scripts/deploy.sh
+
+ls -la ~/lab_chgrp/proyectos/
+ls -la ~/lab_chgrp/reportes/ 
+
+chgrp desarrolladores ~/lab_chgrp/proyectos/app.py 
+ls -la ~/lab_chgrp/proyectos/
+
+#change group for multiples files
+chgrp diseno \
+~/lab_chgrp/proyectos/config.json \
+~/lab_chgrp/reportes/informe.txt
+
+ls -la ~/lab_chgrp/reportes/ 
+ls -la ~/lab_chgrp/proyectos/
