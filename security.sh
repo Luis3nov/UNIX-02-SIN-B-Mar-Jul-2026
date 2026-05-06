@@ -47,3 +47,6 @@ adduser root grupo_temporal
 id root
 
 sudo usermod -G desarrolladores root #that delete all groups except desarrolladores
+
+sudo usermod -aG diseno,marketing,grupo_temporal $(whoami) #that resets the groups for the user
+groups root
