@@ -18,3 +18,8 @@ ls -la ~/proyecto_unix/ #it list all files with detailed information included hi
 sudo groupadd desarrolladores #here we create a simple group
 groupadd -g 2000 operaciones #it creates a group named operaciones with the custom GID 2000
 groupadd --system servicios_web #creates a system group named servicios_web
+
+grep "desarrolladores\|operaciones\|servicios_web" /etc/group #searches the /etc/group file and displays the groups desarrolladores, operaciones, or servicios_web
+grep -E "desarrolladores|operaciones|servicios_web" /etc/group #it do the same as the previous
+#grep search text into files
+groupadd --help #here we view de principal options
