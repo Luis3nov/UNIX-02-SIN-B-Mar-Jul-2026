@@ -34,3 +34,8 @@ ddgroup --system cache_web
 #now we add users to the groups with usermod (low-level)
 usermod -aG desarrolladores $(whoami)
 usermod -aG diseno root
+
+adduser $(whoami) marketing #here we adding user root to the group marketing
+#view current status
+id root
+grep root /etc/group
