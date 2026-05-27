@@ -83,11 +83,7 @@ RUN echo "wireshark-common wireshark-common/install-setuid boolean false" \
 # El "&&" encadena comandos: ejecuta el siguiente SOLO SI el anterior
 # terminó bien. Si algo falla, el build se detiene con error (que es lo
 # que queremos: mejor un error claro que una imagen rota).
-RUN echo "deb https://kali.download/kali kali-rolling main contrib non-free non-free-firmware" > /etc/apt/sources.list
-RUN apt-get clean \
- && rm -rf /var/lib/apt/lists/* \
- && apt-get update --fix-missing \
- && apt-get install -y --fix-missing --no-install-recommends \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     \
     # === Editores de texto y shells (intérpretes de comandos) ===
     neovim \
