@@ -28,7 +28,7 @@ FROM kalilinux/kali-rolling:latest
 #
 # DEBIAN_FRONTEND=noninteractive prevents apt from asking questions
 # during the build. This keeps the Docker build automatic.
-
+#
 # LANG=es_ES.UTF-8 sets Spanish as the main language and uses UTF-8.
 # UTF-8 helps display accents, ñ, and symbols correctly.
 #
@@ -45,58 +45,67 @@ ENV DEBIAN_FRONTEND=noninteractive \
     TERM=xterm-256color
 
 
-# ----------------------------------------------------------------------------
-# Pre-respuesta a una pregunta interactiva de Wireshark
-# ----------------------------------------------------------------------------
-# Wireshark/tshark PREGUNTA durante su instalación si los usuarios
-# normales (no-root) deben poder capturar paquetes. Como en el contenedor
-# siempre somos root, respondemos "false" POR ADELANTADO usando
-# debconf-set-selections para que no detenga el build esperando input.
+# Some packages ask questions while they install.
+# wireshark-common can ask if non-root users should capture packets.
+# In a Docker build, that question would stop the process.
+#
+# echo prints the prepared answer, and the pipe sends it to debconf-set-selections.
+# This uses the Bash idea that output from one command can become input for
+# another command. (Pipes and streams — BHB Ch.1)
+#
+# The answer is false, so normal users do not get packet capture permissions.
+
 RUN echo "wireshark-common wireshark-common/install-setuid boolean false" \
     | debconf-set-selections
 
 
-# ----------------------------------------------------------------------------
-# RUN: ejecutar comandos durante la construcción de la imagen
-# ----------------------------------------------------------------------------
-# Aquí instalamos TODO el software del curso en un solo RUN.
+# RUN executes commands while Docker builds the image.
 #
-#   apt-get update          -> actualiza la lista de paquetes disponibles
-#   apt-get install         -> descarga e instala los paquetes listados
-#     -y                    -> responde "sí" automáticamente
-#     --no-install-recommends -> instala SOLO lo esencial (no los extras
-#                                sugeridos). Ahorra cientos de MB.
+# apt-get update refreshes the list of available packages.
+# apt-get install downloads and installs the selected packages.
+# -y automatically answers yes to install prompts.
+# --no-install-recommends avoids extra optional packages to keep the image smaller.
 #
-# ¿Por qué un solo RUN gigante y no 10 RUN pequeños?
-# Porque CADA RUN crea una capa nueva en la imagen. Menos capas = imagen
-# más pequeña, más rápida de construir y de descargar.
+# && runs the next command only if the previous one worked.
+# This helps stop the build if an important step fails. (Control operators — BHB Ch.1)
 #
-# El "&&" encadena comandos: ejecuta el siguiente SOLO SI el anterior
-# terminó bien. Si algo falla, el build se detiene con error (que es lo
-# que queremos: mejor un error claro que una imagen rota).
+# The backslashes split one long command across many lines for readability.
+#
+# One large RUN creates fewer Docker layers. Installing and cleaning in the same
+# RUN also keeps package cache files out of the final image. (Docker layers — BHB Ch.3)
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
     \
-    # === Editores de texto y shells (intérpretes de comandos) ===
+    # Text editors and shells:
+    # neovim and vim allow editing files directly in the terminal, which is
+    # useful in UNIX labs and remote environments. zsh is installed because this
+    # container starts with Z Shell. bash-completion adds command and filename
+    # completion support for Bash-style interactive work.
+
     neovim \
     vim \
     zsh \
     bash-completion \
     \
-    # === Herramientas de 4ta generación ===
-    # Estas son las protagonistas de las Unidades 2, 3 y 4:
+    # Scripting and text-processing tools:
+    # perl is a scripting language often used for quick automation. make runs
+    # Makefile targets and is common in lab setup workflows. gawk, sed, and grep
+    # are central UNIX text tools: grep filters lines by pattern, sed edits text
+    # streams, and awk/gawk extracts and formats structured text. BHB Ch.2 uses
+    # these tools for parsing command output and automating workflows.
     perl \
     make \
     gawk \
     sed \
     grep \
     \
-    # === Utilidades básicas de UNIX ===
-    # coreutils trae cat, ls, head, tail, sort, cut, tr, etc.
-    # findutils trae find y xargs.
-    # procps trae ps, top, kill (gestión de procesos).
-    # less = paginador para leer archivos largos.
-    # tree = muestra directorios como árbol.
-    # jq = procesa JSON desde la línea de comandos.
+    # Core UNIX utilities:
+    # coreutils provides commands such as cat, ls, sort, head, tail, cut, and tr.
+    # findutils provides find and xargs for locating files and applying commands
+    # to many paths. procps provides process tools such as ps, top, and kill.
+    # less is a pager for reading long output. tree prints directory structures.
+    # jq filters JSON data, which is useful when command-line tools return
+    # structured output. (Linux commands and streams — BHB Ch.1)
     coreutils \
     findutils \
     procps \
@@ -104,15 +113,18 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     tree \
     jq \
     \
-    # === Páginas de manual (comando `man`) ===
-    # La imagen base de Kali viene sin documentación para
-    # ahorrar espacio. La reinstalamos porque en el curso "man bash" o
-    # "man grep" es material de consulta obligada.
+    # Manual pages:
+    # man-db and the manpage packages install local command documentation. BHB
+    # Ch.1 emphasizes using man to learn command syntax, options, and arguments.
     man-db \
     manpages \
     manpages-posix \
     \
-    # === Red básica y utilidades de descarga ===
+    # Download, version-control, certificate, and locale support:
+    # curl and wget fetch resources from remote servers. git manages source-code
+    # history, while git-lfs handles large files that should not be stored as
+    # normal Git objects. ca-certificates enables HTTPS verification. locales
+    # provides the files needed to generate es_ES.UTF-8 later in this RUN block.
     curl \
     wget \
     git \
@@ -120,22 +132,31 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     locales \
     \
-    # === Linter (revisor automático de errores) para scripts Bash ===
+    # shellcheck checks shell scripts for common mistakes, unsafe patterns, and
+    # style problems. It supports the habit of testing scripts before trusting
+    # them, similar to the debugging mindset introduced in BHB Ch.1.
     shellcheck \
     \
-    # === Reconocimiento y escaneo de red ===
-    # nmap = el escáner de puertos más famoso.
-    # masscan = escaneo masivo de rangos grandes de IPs.
+    # Reconnaissance and scanning tools:
+    # nmap discovers hosts and scans ports. masscan is designed for very fast
+    # large-range scans. These tools support the networking and reconnaissance
+    # style of lab work described after the initial Kali/Docker setup.
     nmap \
     masscan \
     \
-    # === Captura y análisis de paquetes de red ===
-    # tcpdump = capturador clásico por terminal.
-    # tshark = versión de terminal de Wireshark.
+    # Packet capture and protocol analysis:
+    # tcpdump captures packets from network interfaces in the terminal. tshark is
+    # the command-line version of Wireshark and can analyze packet captures
+    # without a graphical interface.
     tcpdump \
     tshark \
     \
-    # === Utilidades de red variadas ===
+     # General networking utilities:
+    # netcat-traditional creates simple TCP/UDP connections. socat connects
+    # sockets, files, and processes. dnsutils provides DNS lookup tools. whois
+    # queries domain registration data. traceroute and mtr help diagnose network
+    # paths. iproute2, net-tools, and iputils-ping provide common interface,
+    # routing, and reachability commands.
     netcat-traditional \
     socat \
     dnsutils \
@@ -146,17 +167,18 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     net-tools \
     iputils-ping \
     \
-    # === Anonimato: Tor y similares ===
-    # tor = cliente de la red Tor.
-    # torsocks = "envoltorio" que hace pasar cualquier comando por Tor.
-    # proxychains4 = encadena múltiples proxies.
-    # obfs4proxy = ofusca el tráfico de Tor para evadir bloqueos.
+    # Proxy and privacy-related tools:
+    # tor provides access to the Tor network. torsocks can force compatible
+    # commands through Tor. proxychains4 can route command-line tools through
+    # configured proxies. obfs4proxy disguises Tor traffic when filtering is
+    # present. These tools are installed for controlled lab learning only.
     tor \
     torsocks \
     proxychains4 \
     obfs4proxy \
     \
-    # === Cliente HTTP más legible que curl para aprender ===
+    # httpie is an HTTP client with readable command syntax and formatted output,
+    # useful for learning and testing web requests from the terminal.
     httpie \
     \
  # --- Después de instalar, activamos el idioma español ---
