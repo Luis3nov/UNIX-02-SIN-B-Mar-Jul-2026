@@ -1,28 +1,24 @@
-# ============================================================================
-#  Dockerfile — "receta" para construir la imagen del curso
-# ============================================================================
-#  Un Dockerfile es un archivo de texto con instrucciones paso a paso que
-#  Docker (o Codespaces) lee de arriba hacia abajo para fabricar una
-#  "imagen". Una imagen es como un molde congelado de un sistema Linux
-#  listo para usar; cada vez que abres el Codespace, se crea un
-#  "contenedor" a partir de ese molde.
+
+# This Dockerfile is the recipe Docker uses to build the course container image.
+# Docker reads each instruction from top to bottom and creates a reusable image.
+# A container is the running Linux environment created from that image. This
+# follows the Black Hat Bash lab idea of using a repeatable Kali setup for the
+# course tools and exercises. (Docker/Kali lab — BHB Ch.3)
 #
-#  Analogía: la imagen es el PLANO, el contenedor es la CASA construida
-#  con ese plano. Puedes construir muchas casas iguales a partir de un
-#  solo plano, y si destruyes una casa el plano sigue intacto.
-#
-#  Cada instrucción (FROM, ENV, RUN...) crea una "capa". Docker guarda
-#  esas capas en caché: si no cambias las primeras líneas, no las
-#  reconstruye y el siguiente build es casi instantáneo.
-# ============================================================================
+# Each Dockerfile instruction creates an image layer. Docker can reuse unchanged
+# layers from cache, so stable setup steps should come first. This makes rebuilds
+# faster and avoids downloading packages again when those steps have not changed.
+# (Image layers and rebuilding — BHB Ch.3)
+
+# Now:
+
+# FROM sets the base image used to build this container.
+# Here we start from Kali Linux instead of building Linux from zero.
+# Kali is useful for UNIX, networking, scripting, and security labs.
+# The rolling version keeps Kali packages continuously updated.
+# (Kali lab environment — BHB Ch.3)
 
 
-# ----------------------------------------------------------------------------
-# FROM: imagen base sobre la que vamos a construir
-# ----------------------------------------------------------------------------
-# En lugar de partir de cero, partimos de la imagen oficial de Kali Linux
-# en su versión "rolling" (actualización continua, siempre al día).
-# Todo lo que instalemos más abajo se apila ENCIMA de esta base.
 FROM kalilinux/kali-rolling:latest
 
 
