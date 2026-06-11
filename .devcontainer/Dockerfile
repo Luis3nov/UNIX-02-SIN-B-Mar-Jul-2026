@@ -199,21 +199,22 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
  && rm -rf /var/lib/apt/lists/*
 
 
-# ----------------------------------------------------------------------------
-# SHELL: qué intérprete usar en los siguientes RUN
-# ----------------------------------------------------------------------------
-# Por defecto Docker usa /bin/sh (un shell más limitado y antiguo). Lo
-# cambiamos a bash por si agregamos más instrucciones con sintaxis
-# moderna (arrays, [[ ]], etc.).
+# SHELL changes the interpreter Docker uses for later RUN instructions. Docker's
+# default is usually /bin/sh -c, which may not support the same interactive
+# behavior or syntax as the shell chosen for the course. Here, later RUN commands
+# are executed through Z Shell. This matches the final CMD and the .zshrc prompt
+# configuration below. BHB Ch.1 notes that Kali commonly uses Z Shell by default,
+# even though Bash is the main scripting shell studied in the book.
+
 SHELL ["/bin/zsh", "-c"]
 
 
-# ----------------------------------------------------------------------------
-# WORKDIR: directorio de trabajo al entrar al contenedor
-# ----------------------------------------------------------------------------
-# Codespaces siempre monta el código del repositorio en
-# /workspaces/<nombre-del-repo>. Establecer /workspaces aquí hace que las
-# terminales se abran cerca de nuestros archivos del curso.
+# WORKDIR sets the default directory for later Dockerfile commands and for the
+# initial container session. Codespaces normally mounts the repository inside
+# /workspaces/<repository-name>, so /workspaces is a practical starting point
+# near the course files. This is similar to using cd before running commands in a
+# terminal. (Navigation and working directory — BHB Ch.1)
+
 WORKDIR /workspaces
 
 # Configuración de Git para el contenedor:
