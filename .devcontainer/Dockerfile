@@ -236,6 +236,13 @@ RUN git config --system --add safe.directory '*' \
  && git config --system pull.rebase false \
  && git lfs install --system
 
+
+# chsh changes root's default login shell to Bash.
+# This matches the course focus on Bash scripting and the /root/.bashrc file.
+# Even if the container is started with CMD, setting the login shell keeps root's
+# shell configuration consistent. (Default shell — BHB Ch.1)
+# RUN chsh -s /bin/bash root
+
 # This RUN command creates the zsh startup file for root.
 #
 # cat writes the text block into /root/.zshrc.
