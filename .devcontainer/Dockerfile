@@ -181,16 +181,20 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     # useful for learning and testing web requests from the terminal.
     httpie \
     \
- # --- Después de instalar, activamos el idioma español ---
- # sed busca "# es_ES.UTF-8" en /etc/locale.gen y le quita el "#" para
- # activar esa línea. Luego locale-gen compila los archivos de idioma.
+
+# sed -i edits /etc/locale.gen in place. This command removes the leading
+ # comment marker from the es_ES.UTF-8 line, enabling the Spanish UTF-8 locale.
+ # locale-gen then builds the locale files so LANG and LC_ALL can work correctly.
+ # This uses sed as a stream editor, a text-processing role discussed in BHB Ch.2.
+ 
  && sed -i 's/# es_ES.UTF-8/es_ES.UTF-8/' /etc/locale.gen \
  && locale-gen \
  \
- # --- Limpieza final: reducir el tamaño de la imagen ---
- # apt deja archivos de caché que ya no necesitamos después de instalar.
- # Borrarlos aquí (en el mismo RUN) hace la capa final más pequeña.
- # Si los borráramos en otro RUN, seguirían ocupando en la capa anterior.
+ # apt-get clean removes downloaded package files from apt's cache, and removing
+ # /var/lib/apt/lists/* deletes the package indexes downloaded by apt-get update.
+ # Doing this cleanup in the same RUN instruction matters: if cleanup happened in
+ # a later layer, the old layer would still contain the unnecessary files.
+ # (Docker image size and rebuild practice — BHB Ch.3)
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
