@@ -217,25 +217,37 @@ SHELL ["/bin/zsh", "-c"]
 
 WORKDIR /workspaces
 
-# Configuración de Git para el contenedor:
-# - safe.directory *: confía en cualquier repo montado (necesario porque
-#   /workspaces/... tiene un UID distinto al de root dentro del container).
-# - init.defaultBranch main: evita warnings de "master vs main" en git init.
-# - pull.rebase false: merge por defecto al hacer pull (más intuitivo)
-# - git lfs install --system: registra los hooks de LFS globalmente para
-#   que, si un repo los necesita, funcionen sin sorpresas.
+# These Git settings apply to the whole container.
+#
+# safe.directory '*' lets Git trust repositories inside /workspaces.
+# This helps avoid ownership warnings in Codespaces.
+#
+# init.defaultBranch main sets "main" as the default branch name.
+#
+# pull.rebase false makes git pull use merge instead of rebase by default.
+#
+# git lfs install --system enables Git LFS for large files.
+#
+# The && operators make each command run only if the previous one succeeds.
+# (Command chaining and exit status — BHB Ch.1)
+
 RUN git config --system --add safe.directory '*' \
  && git config --system init.defaultBranch main \
  && git config --system pull.rebase false \
  && git lfs install --system
 
-# ----------------------------------------------------------------------------
-# CMD: comando que se ejecuta por defecto al arrancar el contenedor
-# ----------------------------------------------------------------------------
-# Lanza una shell bash interactiva. Codespaces la sobrescribe con su
-# propia terminal integrada de VS Code, pero es buena práctica dejarla
-# definida para que la imagen sea usable también con Docker puro.
-# Prompt del curso para bash
+# This RUN command creates the zsh startup file for root.
+#
+# cat writes the text block into /root/.zshrc.
+# The > operator replaces the file with that text.
+#
+# <<'EOF' starts a heredoc, which sends multiple lines of text to cat.
+# The quoted EOF keeps the prompt text from being changed while it is written.
+# (Redirection and heredoc — BHB Ch.1)
+#
+# PROMPT defines how the zsh command line looks:
+# colors, the course name, the current folder, and a success/failure mark
+# based on the previous command's exit status.
 
 RUN cat > /root/.zshrc <<'EOF'
 PROMPT='%F{cyan}[Luis_Novillo]%f %F{yellow}%1~%f %(?.%F{green}✓.%F{red}✗ %?)%f %# '
