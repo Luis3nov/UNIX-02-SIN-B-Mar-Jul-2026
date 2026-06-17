@@ -14,3 +14,17 @@ grep "Godzilla" newlog.txt
 sed 's/ //g' log.txt
 sed '1d' newlog.txt > newlogd.txt
 sed '$d' newlog.txt > newlogl.txt
+sed '5,7d' newlog.txt > newlog57.txt
+sed -n '2,15 p' log.txt
+sed -i '1d' log.txt
+sleep 100 &     #[1] 21148
+ps -ef | grep sleep     
+#root           1       0  0 12:14 ?        00:00:00 /bin/sh -c echo Container started trap "exit 0" 15  exec "$@" while sleep 1 & wait $!; do :; done -
+#root       21148    2258  0 13:10 pts/0    00:00:00 sleep 100
+#root       21396       1  0 13:10 ?        00:00:00 sleep 1
+#root       21408    2258  0 13:10 pts/0    00:00:00 grep sleep
+fg %1
+#sleep 100
+bg %1
+#[1]+ sleep 100 &
+nohup ./exercise2.sh & #run the exercise2.sh script in the background and prevent it from closing automatically if you close the terminal
